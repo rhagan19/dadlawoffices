@@ -144,41 +144,40 @@ main {
 .hero-section {
     flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 2rem;
     position: relative;
     width: 100%;
-}
-
-.hero-content {
-    width: 100%;
-    z-index: 2;
-    padding: 0 2rem;
+    min-height: 70vh;
 }
 
 .hero-title {
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    margin-bottom: 1.5rem;
+    font-size: clamp(3rem, 10vw, 7rem);
+    margin-bottom: 2rem;
     color: var(--text-primary);
     font-weight: 300;
-    letter-spacing: -2px;
-    line-height: 1.1;
+    letter-spacing: -3px;
+    line-height: 0.9;
+    width: 100%;
 }
 
 .hero-title strong {
     font-weight: 600;
+    display: block;
 }
 
 .hero-subtitle {
-    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
     color: var(--text-secondary);
     margin-bottom: 3rem;
     font-weight: 300;
-    max-width: 800px;
+    max-width: 90%;
     margin-left: auto;
     margin-right: auto;
+    line-height: 1.4;
 }
 
 .hero-buttons {
