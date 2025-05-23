@@ -125,7 +125,7 @@ main {
 }
 
 /* === Homepage Hero Section (Updated) === */
-.hero-section {
+.hero-section.home-hero {
     min-height: 100vh;
     display: flex;
     justify-content: center;
