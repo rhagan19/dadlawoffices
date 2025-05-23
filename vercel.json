@@ -1,10 +1,1 @@
-{
-  "buildCommand": "echo 'No build required'",
-  "outputDirectory": ".",
-  "framework": null,
-  "functions": {
-    "api/combine-pdfs.js": {
-      "maxDuration": 30
-    }
-  }
-}
+{}
