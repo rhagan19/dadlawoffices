@@ -1,81 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Services - The Law Offices of Sean T. Hagan</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Services - The Law Offices of Sean T. Hagan</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h1>THE LAW OFFICES OF SEAN T. HAGAN</h1>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="upload.html" class="nav-link active">Document Services</a>
-                </li>
-            </ul>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <h1>THE LAW OFFICES OF SEAN T. HAGAN</h1>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="upload.html" class="nav-link active">Document Services</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="upload-container">
+    <h2 class="upload-title">AI-Powered Document Processor</h2>
+    <p class="upload-subtitle">Combine multiple PDF files into a single document with intelligent ordering</p>
+
+    <div class="upload-section">
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📄</div>
+        <p class="upload-text">Drop your PDF files here</p>
+        <p class="upload-subtext">or <label for="fileInput" class="browse-link">Browse</label></p>
+        <input type="file" id="fileInput" accept=".pdf" multiple hidden>
+      </div>
+
+      <div class="file-list-container" id="fileListContainer" style="display: none;">
+        <h3>Uploaded Files</h3>
+        <p class="reorder-hint">Drag files to reorder</p>
+        <ul id="fileList" class="file-list"></ul>
+
+        <div class="action-buttons">
+          <button id="combineBtn" class="btn btn-primary">Combine PDFs</button>
+          <button id="clearBtn" class="btn btn-secondary">Clear All</button>
         </div>
-    </nav>
+      </div>
 
-    <main class="upload-container">
-        <h2 class="upload-title">AI-Powered Document Processor</h2>
-        <p class="upload-subtitle">Combine multiple PDF files into a single document with intelligent ordering</p>
-
-        <div class="upload-section">
-            <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">📄</div>
-                <p class="upload-text">Drop your PDF files here</p>
-                <p class="upload-subtext">or <label for="fileInput" class="browse-link">Browse</label></p>
-                <input type="file" id="fileInput" accept=".pdf" multiple hidden>
-            </div>
-
-            <div class="file-list-container" id="fileListContainer" style="display: none;">
-                <h3>Uploaded Files</h3>
-                <p class="reorder-hint">Drag files to reorder</p>
-                <ul id="fileList" class="file-list"></ul>
-                
-                <div class="action-buttons">
-                    <button id="combineBtn" class="btn btn-primary">Combine PDFs</button>
-                    <button id="clearBtn" class="btn btn-secondary">Clear All</button>
-                </div>
-            </div>
-
-            <div class="progress-container" id="progressContainer" style="display: none;">
-                <div class="progress-item">
-                    <p class="progress-label">Uploading files...</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="uploadProgress"></div>
-                    </div>
-                </div>
-                <div class="progress-item" id="combineProgressItem" style="display: none;">
-                    <p class="progress-label">Combining PDFs...</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="combineProgress"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="result-container" id="resultContainer" style="display: none;">
-                <div class="success-icon">✓</div>
-                <h3>Success!</h3>
-                <p>Your PDFs have been combined successfully.</p>
-                <a href="#" id="downloadLink" class="btn btn-primary">Download Combined PDF</a>
-                <button id="newSessionBtn" class="btn btn-secondary">Start New Session</button>
-            </div>
+      <div class="progress-container" id="progressContainer" style="display: none;">
+        <div class="progress-item">
+          <p class="progress-label">Uploading files...</p>
+          <div class="progress-bar"><div class="progress-fill" id="uploadProgress"></div></div>
         </div>
-    </main>
+        <div class="progress-item" id="combineProgressItem" style="display: none;">
+          <p class="progress-label">Combining PDFs...</p>
+          <div class="progress-bar"><div class="progress-fill" id="combineProgress"></div></div>
+        </div>
+      </div>
 
-    <footer class="footer">
-        <p>&copy; 2024 The Law Offices of Sean T. Hagan. All rights reserved.</p>
-    </footer>
+      <div class="result-container" id="resultContainer" style="display: none;">
+        <div class="success-icon">✓</div>
+        <h3>Success!</h3>
+        <p>Your PDFs have been combined successfully.</p>
+        <a href="#" id="downloadLink" class="btn btn-primary">Download Combined PDF</a>
+        <button id="newSessionBtn" class="btn btn-secondary">Start New Session</button>
+      </div>
+    </div>
+  </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-    <script src="upload.js"></script>
+  <footer class="footer">
+    <p>&copy; 2024 The Law Offices of Sean T. Hagan. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <script src="upload.js"></script>
 </body>
 </html>
