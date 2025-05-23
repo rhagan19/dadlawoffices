@@ -1,52 +1,99 @@
-<section id="features" class="features">
-        <div class="feature-cards">
-            <a href="upload.html" class="feature-card-link">
-                <div class="feature-card">
-                    <div class="feature-icon">📄</div>
-                    <h<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Law Offices of Sean T. Hagan</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Law Offices of Sean T. Hagan</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Hero card styling for homepage only */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      padding: 2rem;
+      background: linear-gradient(135deg, #0a1410 0%, #0f1f1a 100%);
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 214, 122, 0.1);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      width: 100%;
+      max-width: 700px;
+      text-align: center;
+      z-index: 2;
+      box-shadow: 0 10px 40px rgba(0, 214, 122, 0.05);
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      font-weight: 300;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .hero-title strong {
+      font-weight: 600;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 1.5vw, 1.35rem);
+      color: #a0a0a0;
+      margin-bottom: 0;
+      font-weight: 300;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h1>THE LAW OFFICES OF SEAN T. HAGAN</h1>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link active">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="upload.html" class="nav-link">Document Services</a>
-                </li>
-            </ul>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <h1>THE LAW OFFICES OF SEAN T. HAGAN</h1>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="upload.html" class="nav-link">Document Services</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="hero-section">
+    <div class="hero-card">
+      <h2 class="hero-title">PRECISION LEGAL INSIGHTS,<br><strong>POWERED BY AI</strong></h2>
+      <p class="hero-subtitle">The Law Offices of Sean T. Hagan combines traditional legal expertise with cutting-edge technology to deliver superior results</p>
+    </div>
+  </main>
+
+  <section id="features" class="features">
+    <div class="feature-cards">
+      <a href="upload.html" class="feature-card-link">
+        <div class="feature-card">
+          <div class="feature-icon">📄</div>
+          <h3 class="feature-title">Document Services</h3>
+          <p class="feature-description">Advanced PDF processing and document management tools</p>
         </div>
-    </nav>
+      </a>
+    </div>
+  </section>
 
-    <main class="hero-section">
-        <h2 class="hero-title">PRECISION LEGAL INSIGHTS,<br><strong>POWERED BY AI</strong></h2>
-        <p class="hero-subtitle">The Law Offices of Sean T. Hagan combines traditional legal expertise with cutting-edge technology to deliver superior results</p>
-    </main>
-
-    <section id="features" class="features">
-        <div class="feature-cards">
-            <a href="upload.html" class="feature-card-link">
-                <div class="feature-card">
-                    <div class="feature-icon">📄</div>
-                    <h3 class="feature-title">Document Services</h3>
-                    <p class="feature-description">Advanced PDF processing and document management tools</p>
-                </div>
-            </a>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <p>&copy; 2024 The Law Offices of Sean T. Hagan. All rights reserved.</p>
-    </footer>
+  <footer class="footer">
+    <p>&copy; 2024 The Law Offices of Sean T. Hagan. All rights reserved.</p>
+  </footer>
 </body>
 </html>
