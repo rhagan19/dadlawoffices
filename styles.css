@@ -124,8 +124,8 @@ main {
     font-weight: 500;
 }
 
-/* === Homepage Hero Section (Updated) === */
-.hero-section.home-hero {
+/* === Homepage Fullscreen Hero (Scoped to index.html only) === */
+.home-hero {
     min-height: 100vh;
     display: flex;
     justify-content: center;
