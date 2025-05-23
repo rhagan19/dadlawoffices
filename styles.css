@@ -27,6 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 body::before {
@@ -148,36 +149,34 @@ main {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 2rem;
+    padding: 4rem 2rem;
     position: relative;
-    width: 100%;
-    min-height: 70vh;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    background: linear-gradient(135deg, #0a1410 0%, #0f1f1a 100%);
 }
 
 .hero-title {
-    font-size: clamp(3rem, 10vw, 7rem);
-    margin-bottom: 2rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1.5rem;
     color: var(--text-primary);
     font-weight: 300;
-    letter-spacing: -3px;
-    line-height: 0.9;
-    width: 100%;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    max-width: 1200px;
 }
 
 .hero-title strong {
     font-weight: 600;
-    display: block;
 }
 
 .hero-subtitle {
-    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    font-size: clamp(1rem, 1.5vw, 1.35rem);
     color: var(--text-secondary);
     margin-bottom: 3rem;
     font-weight: 300;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.4;
+    max-width: 800px;
+    line-height: 1.5;
 }
 
 .hero-buttons {
