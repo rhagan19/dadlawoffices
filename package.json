@@ -11,7 +11,7 @@
     "pdf-lib": "^1.17.1",
     "formidable": "^3.5.1"
   },
-  "devDependencies": {
-    "vercel": "^32.0.0"
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
