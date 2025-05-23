@@ -1,0 +1,17 @@
+{
+  "name": "law-office-website",
+  "version": "1.0.0",
+  "description": "Law office website with PDF combination functionality",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'",
+    "start": "vercel"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "formidable": "^3.5.1"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  }
+}
