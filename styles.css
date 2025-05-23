@@ -124,7 +124,7 @@ main {
     font-weight: 500;
 }
 
-/* === Homepage Fullscreen Hero (Scoped to index.html only) === */
+/* Homepage Hero Section (Fullscreen) */
 .home-hero {
     min-height: 100vh;
     display: flex;
@@ -169,6 +169,78 @@ main {
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.5;
+}
+
+/* Upload Page Layout */
+.upload-container {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+    flex: 1;
+}
+
+.upload-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-weight: 300;
+}
+
+.upload-subtitle {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* Upload Section */
+.upload-section {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 3rem;
+    border: 1px solid rgba(0, 214, 122, 0.1);
+}
+
+/* Upload Area */
+.upload-area {
+    border: 2px dashed rgba(0, 214, 122, 0.3);
+    border-radius: 12px;
+    padding: 4rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(0, 214, 122, 0.02);
+}
+
+.upload-area:hover {
+    border-color: var(--accent-green);
+    background: rgba(0, 214, 122, 0.05);
+}
+
+.upload-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+}
+
+.upload-text {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+}
+
+.upload-subtext {
+    color: var(--text-secondary);
+}
+
+.browse-link {
+    color: var(--accent-green);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.browse-link:hover {
+    color: var(--accent-green-light);
 }
 
 /* Feature Cards Section */
@@ -270,5 +342,13 @@ main {
 
     .feature-cards {
         flex-direction: column;
+    }
+
+    .upload-area {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .upload-section {
+        padding: 1.5rem;
     }
 }
