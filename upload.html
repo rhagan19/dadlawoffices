@@ -19,50 +19,16 @@
     </div>
   </nav>
 
-  <main class="upload-container">
-    <h2 class="upload-title">AI-Powered Document Processor</h2>
-    <p class="upload-subtitle">Combine multiple PDF files into a single document with intelligent ordering</p>
+  <main class="upload-hero">
+    <div class="upload-card">
+      <h2 class="upload-title">AI-Powered Document Processor</h2>
+      <p class="upload-subtitle">Combine multiple PDF files into a single document with intelligent ordering</p>
 
-    <div class="upload-section">
       <div class="upload-area" id="uploadArea">
         <div class="upload-icon">📄</div>
         <p class="upload-text">Drop your PDF files here</p>
         <p class="upload-subtext">or <label for="fileInput" class="browse-link">Browse</label></p>
         <input type="file" id="fileInput" accept=".pdf" multiple hidden />
-      </div>
-
-      <div class="file-list-container" id="fileListContainer" style="display: none;">
-        <h3>Uploaded Files</h3>
-        <p class="reorder-hint">Drag files to reorder</p>
-        <ul id="fileList" class="file-list"></ul>
-
-        <div class="action-buttons">
-          <button id="combineBtn" class="btn btn-primary">Combine PDFs</button>
-          <button id="clearBtn" class="btn btn-secondary">Clear All</button>
-        </div>
-      </div>
-
-      <div class="progress-container" id="progressContainer" style="display: none;">
-        <div class="progress-item">
-          <p class="progress-label">Uploading files...</p>
-          <div class="progress-bar">
-            <div class="progress-fill" id="uploadProgress"></div>
-          </div>
-        </div>
-        <div class="progress-item" id="combineProgressItem" style="display: none;">
-          <p class="progress-label">Combining PDFs...</p>
-          <div class="progress-bar">
-            <div class="progress-fill" id="combineProgress"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="result-container" id="resultContainer" style="display: none;">
-        <div class="success-icon">✓</div>
-        <h3>Success!</h3>
-        <p>Your PDFs have been combined successfully.</p>
-        <a href="#" id="downloadLink" class="btn btn-primary">Download Combined PDF</a>
-        <button id="newSessionBtn" class="btn btn-secondary">Start New Session</button>
       </div>
     </div>
   </main>
