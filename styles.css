@@ -189,13 +189,18 @@ main {
 .features {
     padding: 4rem 2rem;
     width: 100%;
+    background: linear-gradient(135deg, #0a1410 0%, #0f1f1a 100%);
+    position: relative;
+    z-index: 2;
 }
 
 .feature-cards {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .feature-card {
@@ -206,6 +211,7 @@ main {
     text-align: center;
     transition: all 0.3s ease;
     max-width: 400px;
+    width: 100%;
 }
 
 /* Feature Card Link */
