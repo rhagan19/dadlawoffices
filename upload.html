@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document Services - The Law Offices of Sean T. Hagan</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
 <body>
   <nav class="navbar">
@@ -22,12 +23,10 @@
       </ul>
     </div>
   </nav>
-
   <main class="upload-fullscreen">
     <div class="upload-glass">
       <h2 class="upload-title">AI-Powered Document Processor</h2>
       <p class="upload-subtitle">Combine multiple PDF files into a single document with intelligent ordering</p>
-
       <div class="upload-area" id="uploadArea">
         <div class="upload-icon">📄</div>
         <p class="upload-text">Drop your PDF files here</p>
@@ -36,42 +35,23 @@
         </p>
         <input type="file" id="fileInput" accept=".pdf" multiple hidden />
       </div>
-
-      <div class="file-list-container" id="fileListContainer" style="display: block;">
+      <div class="file-list-container" id="fileListContainer" style="display: none;">
         <h3>Uploaded Files</h3>
         <p class="reorder-hint">Drag files to reorder</p>
-
-        <ul id="fileList" class="file-list">
-          <!-- Sample File Entry -->
-          <li class="file-item">
-            <span class="file-icon">📄</span>
-            <span class="file-name">Lesson Plan Final.pdf</span>
-            <span class="file-size">(4.86 MB)</span>
-            <button class="remove-btn" aria-label="Remove file">✖</button>
-          </li>
-        </ul>
-
+        <ul id="fileList" class="file-list"></ul>
         <div class="action-buttons">
           <button id="combineBtn" class="btn btn-primary">Combine PDFs</button>
           <button id="clearBtn" class="btn btn-secondary">Clear All</button>
         </div>
       </div>
-
       <div class="progress-container" id="progressContainer" style="display: none;">
         <div class="progress-item">
-          <p class="progress-label">Uploading files...</p>
+          <p class="progress-label">Processing PDFs...</p>
           <div class="progress-bar">
             <div class="progress-fill" id="uploadProgress"></div>
           </div>
         </div>
-        <div class="progress-item" id="combineProgressItem" style="display: none;">
-          <p class="progress-label">Combining PDFs...</p>
-          <div class="progress-bar">
-            <div class="progress-fill" id="combineProgress"></div>
-          </div>
-        </div>
       </div>
-
       <div class="result-container" id="resultContainer" style="display: none;">
         <div class="success-icon">✓</div>
         <h3>Success!</h3>
@@ -81,11 +61,9 @@
       </div>
     </div>
   </main>
-
   <footer class="footer">
     <p>&copy; 2024 The Law Offices of Sean T. Hagan. All rights reserved.</p>
   </footer>
-
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
   <script src="upload.js"></script>
 </body>
