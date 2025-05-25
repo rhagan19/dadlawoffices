@@ -1,0 +1,9 @@
+{
+  "name": "law-office-website",
+  "version": "1.0.0",
+  "description": "Law office website with PDF combination functionality",
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "formidable": "^3.5.1"
+  }
+}
