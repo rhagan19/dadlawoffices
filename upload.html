@@ -37,10 +37,19 @@
         <input type="file" id="fileInput" accept=".pdf" multiple hidden />
       </div>
 
-      <div class="file-list-container" id="fileListContainer" style="display: none;">
+      <div class="file-list-container" id="fileListContainer" style="display: block;">
         <h3>Uploaded Files</h3>
         <p class="reorder-hint">Drag files to reorder</p>
-        <ul id="fileList" class="file-list"></ul>
+
+        <ul id="fileList" class="file-list">
+          <!-- Sample File Entry -->
+          <li class="file-item">
+            <span class="file-icon">📄</span>
+            <span class="file-name">Lesson Plan Final.pdf</span>
+            <span class="file-size">(4.86 MB)</span>
+            <button class="remove-btn" aria-label="Remove file">✖</button>
+          </li>
+        </ul>
 
         <div class="action-buttons">
           <button id="combineBtn" class="btn btn-primary">Combine PDFs</button>
