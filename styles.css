@@ -330,3 +330,59 @@ main {
   opacity: 1;
   color: var(--error-color);
 }
+
+/* Feature Cards Section */
+.features {
+  padding: 4rem 2rem;
+  width: 100%;
+}
+
+.feature-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.feature-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.feature-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(0, 214, 122, 0.1);
+  border-radius: 12px;
+  padding: 2.5rem 3rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  max-width: 400px;
+  width: 100%;
+}
+
+.feature-card-link:hover .feature-card {
+  transform: translateY(-5px);
+  border-color: rgba(0, 214, 122, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 214, 122, 0.1);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--accent-green);
+}
+
+.feature-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.feature-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+
