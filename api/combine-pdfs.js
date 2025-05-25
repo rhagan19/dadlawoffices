@@ -1,15 +1,9 @@
 // api/combine-pdfs.js
 const { PDFDocument } = require('pdf-lib');
-const { formidable } = require('formidable'); // Note the destructuring here
+const { formidable } = require('formidable');
 const fs = require('fs').promises;
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   console.log('Request method:', req.method);
   
   if (req.method !== 'POST') {
@@ -102,4 +96,10 @@ export default async function handler(req, res) {
     console.error('Error combining PDFs:', error);
     res.status(500).json({ error: 'Failed to combine PDFs', details: error.message });
   }
-}
+};
+
+module.exports.config = {
+  api: {
+    bodyParser: false,
+  },
+};
