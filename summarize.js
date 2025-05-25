@@ -1,5 +1,5 @@
 // Configuration - Replace with your OpenAI API key
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = 'your-openai-api-key-here';
 
 // DOM elements
 const uploadArea = document.getElementById('uploadArea');
@@ -185,53 +185,144 @@ summarizeBtn.addEventListener('click', async () => {
 
 // Format summary for display
 function formatSummaryHTML(text) {
-    // Convert markdown-style formatting to HTML
-    return text
-        .split('\n')
-        .map(line => {
-            if (line.startsWith('#')) {
-                const level = line.match(/^#+/)[0].length;
-                return `<h${level + 2}>${line.replace(/^#+\s/, '')}</h${level + 2}>`;
+    // Split into sections and format
+    const sections = text.split(/\*\*(\d+\)|[0-9]+\.)\s*/);
+    let html = '<div style="padding: 20px;">';
+    
+    for (let i = 0; i < sections.length; i++) {
+        const section = sections[i].trim();
+        if (!section) continue;
+        
+        // Check if this is a header
+        if (section.includes('Case Overview') || 
+            section.includes('Key Facts') || 
+            section.includes('Legal Issues') || 
+            section.includes('Relevant Law') || 
+            section.includes('Analysis') || 
+            section.includes('Conclusion')) {
+            
+            // Extract the header and content
+            const lines = section.split('\n');
+            const header = lines[0].replace(/\*\*/g, '');
+            html += `<h4 style="margin-top: 20px; margin-bottom: 10px; color: #000;">${header}</h4>`;
+            
+            // Add the rest as paragraphs
+            for (let j = 1; j < lines.length; j++) {
+                if (lines[j].trim()) {
+                    html += `<p style="margin-bottom: 10px; text-align: justify;">${lines[j].trim()}</p>`;
+                }
             }
-            if (line.trim() === '') return '<br>';
-            return `<p>${line}</p>`;
-        })
-        .join('');
+        } else {
+            // Regular paragraph
+            const paragraphs = section.split('\n');
+            paragraphs.forEach(para => {
+                if (para.trim()) {
+                    html += `<p style="margin-bottom: 10px; text-align: justify;">${para.trim()}</p>`;
+                }
+            });
+        }
+    }
+    
+    html += '</div>';
+    return html;
 }
 
 // Download as PDF
 downloadPdf.addEventListener('click', async () => {
-    const { PDFDocument, rgb } = PDFLib;
+    const { PDFDocument, rgb, StandardFonts } = PDFLib;
     const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage();
+    
+    // Embed font
+    const timesRoman = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+    const timesRomanBold = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
+    
+    let page = pdfDoc.addPage();
     const { width, height } = page.getSize();
+    const margin = 50;
+    const lineHeight = 20;
+    const maxWidth = width - 2 * margin;
+    let yPosition = height - margin;
     
     // Add title
     page.drawText('Legal Brief', {
-        x: 50,
-        y: height - 50,
-        size: 20,
+        x: margin,
+        y: yPosition,
+        size: 24,
+        font: timesRomanBold,
         color: rgb(0, 0, 0),
     });
+    yPosition -= 40;
     
-    // Add summary text (simplified - in production, use proper text wrapping)
-    const lines = summaryText.split('\n');
-    let yPosition = height - 100;
+    // Split text into lines and paragraphs
+    const paragraphs = summaryText.split('\n');
     
-    for (const line of lines) {
-        if (yPosition < 50) {
-            // Add new page if needed
-            const newPage = pdfDoc.addPage();
-            yPosition = newPage.getSize().height - 50;
+    for (const paragraph of paragraphs) {
+        if (paragraph.trim() === '') {
+            yPosition -= lineHeight;
+            continue;
         }
         
-        page.drawText(line.substring(0, 80), {
-            x: 50,
-            y: yPosition,
-            size: 10,
-            color: rgb(0, 0, 0),
-        });
-        yPosition -= 15;
+        // Check if it's a heading
+        const isHeading = paragraph.includes('Case Overview') || 
+                         paragraph.includes('Key Facts') || 
+                         paragraph.includes('Legal Issues') || 
+                         paragraph.includes('Relevant Law') || 
+                         paragraph.includes('Analysis') || 
+                         paragraph.includes('Conclusion');
+        
+        const font = isHeading ? timesRomanBold : timesRoman;
+        const fontSize = isHeading ? 14 : 11;
+        
+        // Wrap text
+        const words = paragraph.split(' ');
+        let line = '';
+        
+        for (const word of words) {
+            const testLine = line + word + ' ';
+            const textWidth = font.widthOfTextAtSize(testLine, fontSize);
+            
+            if (textWidth > maxWidth && line !== '') {
+                // Check if we need a new page
+                if (yPosition < margin + lineHeight) {
+                    page = pdfDoc.addPage();
+                    yPosition = height - margin;
+                }
+                
+                page.drawText(line.trim(), {
+                    x: margin,
+                    y: yPosition,
+                    size: fontSize,
+                    font: font,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= lineHeight;
+                line = word + ' ';
+            } else {
+                line = testLine;
+            }
+        }
+        
+        // Draw remaining text
+        if (line.trim() !== '') {
+            if (yPosition < margin + lineHeight) {
+                page = pdfDoc.addPage();
+                yPosition = height - margin;
+            }
+            
+            page.drawText(line.trim(), {
+                x: margin,
+                y: yPosition,
+                size: fontSize,
+                font: font,
+                color: rgb(0, 0, 0),
+            });
+            yPosition -= lineHeight;
+        }
+        
+        // Add extra space after headings
+        if (isHeading) {
+            yPosition -= 10;
+        }
     }
     
     const pdfBytes = await pdfDoc.save();
@@ -240,26 +331,62 @@ downloadPdf.addEventListener('click', async () => {
 
 // Download as Word
 downloadWord.addEventListener('click', () => {
-    // Create a simple Word document using docx library
-    const doc = new docx.Document({
+    const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType } = docx;
+    
+    // Parse the summary text into sections
+    const sections = summaryText.split('\n');
+    const children = [
+        new Paragraph({
+            text: "Legal Brief",
+            heading: HeadingLevel.TITLE,
+            alignment: AlignmentType.CENTER,
+            spacing: { after: 400 },
+        }),
+    ];
+    
+    // Add each section
+    sections.forEach(section => {
+        const trimmedSection = section.trim();
+        if (!trimmedSection) {
+            children.push(new Paragraph({ text: "" }));
+            return;
+        }
+        
+        // Check if it's a heading
+        const isHeading = trimmedSection.includes('Case Overview') || 
+                         trimmedSection.includes('Key Facts') || 
+                         trimmedSection.includes('Legal Issues') || 
+                         trimmedSection.includes('Relevant Law') || 
+                         trimmedSection.includes('Analysis') || 
+                         trimmedSection.includes('Conclusion');
+        
+        if (isHeading) {
+            children.push(
+                new Paragraph({
+                    text: trimmedSection.replace(/\*\*/g, ''),
+                    heading: HeadingLevel.HEADING_2,
+                    spacing: { before: 240, after: 120 },
+                })
+            );
+        } else {
+            children.push(
+                new Paragraph({
+                    text: trimmedSection,
+                    spacing: { after: 200 },
+                    alignment: AlignmentType.JUSTIFIED,
+                })
+            );
+        }
+    });
+    
+    const doc = new Document({
         sections: [{
             properties: {},
-            children: [
-                new docx.Paragraph({
-                    text: "Legal Brief",
-                    heading: docx.HeadingLevel.TITLE,
-                }),
-                ...summaryText.split('\n').map(line => 
-                    new docx.Paragraph({
-                        text: line,
-                        spacing: { after: 200 },
-                    })
-                ),
-            ],
+            children: children,
         }],
     });
     
-    docx.Packer.toBlob(doc).then(blob => {
+    Packer.toBlob(doc).then(blob => {
         downloadFile(blob, 'legal_brief.docx');
     });
 });
