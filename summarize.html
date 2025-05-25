@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summarize It - The Law Offices of Sean T. Hagan</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.min.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <h1>THE LAW OFFICES OF SEAN T. HAGAN</h1>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="upload.html" class="nav-link">Document Services</a>
+        </li>
+        <li class="nav-item">
+          <a href="summarize.html" class="nav-link active">Summarize It</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
+  <main class="upload-fullscreen">
+    <div class="upload-glass">
+      <h2 class="upload-title">AI Legal Document Summarizer</h2>
+      <p class="upload-subtitle">Upload case files to generate comprehensive legal briefs powered by AI</p>
+      
+      <!-- Upload Area -->
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📋</div>
+        <p class="upload-text">Drop your PDF or Word document here</p>
+        <p class="upload-subtext">
+          or <label for="fileInput" class="browse-link">Browse</label>
+        </p>
+        <input type="file" id="fileInput" accept=".pdf,.doc,.docx" hidden />
+      </div>
+      
+      <!-- File Display -->
+      <div class="file-display" id="fileDisplay" style="display: none;">
+        <div class="uploaded-file">
+          <span class="file-icon">📄</span>
+          <div>
+            <span class="file-name" id="fileName"></span>
+            <span class="file-size" id="fileSize"></span>
+          </div>
+          <button class="remove-btn" id="removeFile" aria-label="Remove file">✖</button>
+        </div>
+        <button id="summarizeBtn" class="btn btn-primary">Generate Legal Brief</button>
+      </div>
+      
+      <!-- Progress Container -->
+      <div class="progress-container" id="progressContainer" style="display: none;">
+        <div class="progress-item">
+          <p class="progress-label">Analyzing document and generating legal brief...</p>
+          <div class="progress-bar">
+            <div class="progress-fill" id="uploadProgress"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Summary Preview -->
+      <div class="summary-container" id="summaryContainer" style="display: none;">
+        <h3>Legal Brief Generated</h3>
+        <div class="summary-preview">
+          <div class="document-preview" id="documentPreview">
+            <!-- Summary content will be displayed here -->
+          </div>
+        </div>
+        <div class="download-buttons">
+          <button id="downloadPdf" class="btn btn-primary">
+            <span class="btn-icon">📄</span> Download as PDF
+          </button>
+          <button id="downloadWord" class="btn btn-primary">
+            <span class="btn-icon">📝</span> Download as Word
+          </button>
+        </div>
+        <button id="newSummaryBtn" class="btn btn-secondary">Summarize Another Document</button>
+      </div>
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <p>&copy; 2024 The Law Offices of Sean T. Hagan. All rights reserved.</p>
+  </footer>
+  
+  <script src="summarize.js"></script>
+</body>
+</html>
