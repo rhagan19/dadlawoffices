@@ -1,100 +1,73 @@
-// api/combine-pdfs.js
 const { PDFDocument } = require('pdf-lib');
-const { formidable } = require('formidable');
-const fs = require('fs').promises;
 
-module.exports = async function handler(req, res) {
-  console.log('Request method:', req.method);
-  
+module.exports = async (req, res) => {
+  // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    console.log('Starting PDF combination process...');
+    // For Vercel, we need to handle the multipart data manually
+    const chunks = [];
     
-    // Parse the multipart form data
-    const form = formidable({
-      multiples: true,
-      keepExtensions: true,
-    });
-
-    const [fields, files] = await new Promise((resolve, reject) => {
-      form.parse(req, (err, fields, files) => {
-        if (err) {
-          console.error('Form parse error:', err);
-          reject(err);
-        }
-        else {
-          console.log('Fields:', fields);
-          console.log('Files:', files);
-          resolve([fields, files]);
-        }
-      });
+    req.on('data', chunk => chunks.push(chunk));
+    
+    await new Promise((resolve, reject) => {
+      req.on('end', resolve);
+      req.on('error', reject);
     });
     
-    // Get the PDFs - handle both single and multiple files
-    let pdfFiles = files.pdfs;
-    if (!Array.isArray(pdfFiles)) {
-      pdfFiles = pdfFiles ? [pdfFiles] : [];
-    }
+    const buffer = Buffer.concat(chunks);
+    const boundary = req.headers['content-type'].split('boundary=')[1];
     
-    if (pdfFiles.length === 0) {
-      return res.status(400).json({ error: 'No PDF files uploaded' });
-    }
+    // Parse multipart form data manually
+    const parts = buffer.toString('binary').split(`--${boundary}`);
+    const files = [];
     
-    // Extract order information
-    const fileOrder = [];
-    Object.keys(fields).forEach(key => {
-      if (key.startsWith('order_')) {
-        const index = parseInt(key.split('_')[1]);
-        const order = parseInt(Array.isArray(fields[key]) ? fields[key][0] : fields[key]);
-        fileOrder[order] = index;
-      }
-    });
-
-    // Create a new PDF document
-    const mergedPdf = await PDFDocument.create();
-
-    // Process PDFs in the specified order
-    for (let i = 0; i < fileOrder.length; i++) {
-      const fileIndex = fileOrder[i];
-      const file = pdfFiles[fileIndex];
-      
-      if (!file || !file.filepath) {
-        console.error('Missing file at index:', fileIndex);
-        continue;
-      }
-      
-      try {
-        // Read the PDF file
-        const pdfBytes = await fs.readFile(file.filepath);
-        const pdf = await PDFDocument.load(pdfBytes);
+    for (const part of parts) {
+      if (part.includes('Content-Type: application/pdf')) {
+        const headerEnd = part.indexOf('\r\n\r\n');
+        const headers = part.substring(0, headerEnd);
+        const filenameMatch = headers.match(/filename="(.+?)"/);
         
-        // Copy all pages from the current PDF
-        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-        copiedPages.forEach((page) => mergedPdf.addPage(page));
-      } catch (error) {
-        console.error('Error processing PDF:', file.originalFilename, error);
+        if (filenameMatch) {
+          const dataStart = headerEnd + 4;
+          const dataEnd = part.lastIndexOf('\r\n');
+          const fileData = Buffer.from(part.substring(dataStart, dataEnd), 'binary');
+          files.push(fileData);
+        }
       }
     }
-
-    // Serialize the merged PDF
+    
+    if (files.length === 0) {
+      return res.status(400).json({ error: 'No PDF files found' });
+    }
+    
+    // Create merged PDF
+    const mergedPdf = await PDFDocument.create();
+    
+    // Add each PDF
+    for (const fileData of files) {
+      try {
+        const pdf = await PDFDocument.load(fileData);
+        const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+        pages.forEach(page => mergedPdf.addPage(page));
+      } catch (err) {
+        console.error('Error processing individual PDF:', err);
+      }
+    }
+    
+    // Save merged PDF
     const mergedPdfBytes = await mergedPdf.save();
-
-    // Clean up temporary files
-    await Promise.all(pdfFiles.map(file => 
-      fs.unlink(file.filepath).catch(err => console.error('Error deleting temp file:', err))
-    ));
-
-    // Send the merged PDF as response
+    
+    // Send response
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename="combined_document.pdf"');
+    res.setHeader('Content-Disposition', 'attachment; filename="combined.pdf"');
     res.status(200).send(Buffer.from(mergedPdfBytes));
     
   } catch (error) {
-    console.error('Error combining PDFs:', error);
-    res.status(500).json({ error: 'Failed to combine PDFs', details: error.message });
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to combine PDFs' });
   }
 };
 
