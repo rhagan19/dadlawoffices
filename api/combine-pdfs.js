@@ -1,6 +1,6 @@
 // api/combine-pdfs.js
 const { PDFDocument } = require('pdf-lib');
-const formidable = require('formidable');
+const { formidable } = require('formidable'); // Note the destructuring here
 const fs = require('fs').promises;
 
 export const config = {
@@ -10,11 +10,15 @@ export const config = {
 };
 
 export default async function handler(req, res) {
+  console.log('Request method:', req.method);
+  
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
+    console.log('Starting PDF combination process...');
+    
     // Parse the multipart form data
     const form = formidable({
       multiples: true,
@@ -23,8 +27,15 @@ export default async function handler(req, res) {
 
     const [fields, files] = await new Promise((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
-        if (err) reject(err);
-        else resolve([fields, files]);
+        if (err) {
+          console.error('Form parse error:', err);
+          reject(err);
+        }
+        else {
+          console.log('Fields:', fields);
+          console.log('Files:', files);
+          resolve([fields, files]);
+        }
       });
     });
     
