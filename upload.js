@@ -11,8 +11,6 @@ const combineBtn = document.getElementById('combineBtn');
 const clearBtn = document.getElementById('clearBtn');
 const progressContainer = document.getElementById('progressContainer');
 const uploadProgress = document.getElementById('uploadProgress');
-const combineProgressItem = document.getElementById('combineProgressItem');
-const combineProgress = document.getElementById('combineProgress');
 const resultContainer = document.getElementById('resultContainer');
 const downloadLink = document.getElementById('downloadLink');
 const newSessionBtn = document.getElementById('newSessionBtn');
@@ -77,12 +75,10 @@ function displayFiles() {
         li.dataset.index = index;
         
         li.innerHTML = `
-            <div class="file-info">
-                <span class="file-icon">📄</span>
-                <span class="file-name">${file.name}</span>
-                <span class="file-size">(${formatFileSize(file.size)})</span>
-            </div>
-            <button class="remove-btn" onclick="removeFile(${index})">×</button>
+            <span class="file-icon">📄</span>
+            <span class="file-name">${file.name}</span>
+            <span class="file-size">(${formatFileSize(file.size)})</span>
+            <button class="remove-btn" onclick="removeFile(${index})" aria-label="Remove file">✖</button>
         `;
         
         fileList.appendChild(li);
@@ -124,7 +120,7 @@ clearBtn.addEventListener('click', () => {
     displayFiles();
 });
 
-// Combine PDFs
+// Combine PDFs using client-side PDF-lib
 combineBtn.addEventListener('click', async () => {
     if (uploadedFiles.length === 0) {
         alert('Please upload at least one PDF file.');
@@ -134,39 +130,49 @@ combineBtn.addEventListener('click', async () => {
     // Show progress
     progressContainer.style.display = 'block';
     fileListContainer.style.display = 'none';
-    
-    // Simulate upload progress
-    await simulateProgress(uploadProgress, 'Uploading files...', 50);
-    
-    // Show combine progress
-    combineProgressItem.style.display = 'block';
-    await simulateProgress(combineProgress, 'Combining PDFs...', 30);
+    uploadProgress.style.width = '10%';
     
     try {
-        // Create FormData
-        const formData = new FormData();
-        uploadedFiles.forEach((file, index) => {
-            formData.append('pdfs', file);
-            formData.append(`order_${index}`, index);
-        });
+        // Create a new PDF document
+        const mergedPdf = await PDFLib.PDFDocument.create();
         
-        // Send to API
-        const response = await fetch('/api/combine-pdfs', {
-            method: 'POST',
-            body: formData
-        });
-        
-        if (!response.ok) {
-            throw new Error('Failed to combine PDFs');
+        // Process each file
+        for (let i = 0; i < uploadedFiles.length; i++) {
+            const file = uploadedFiles[i];
+            const arrayBuffer = await file.arrayBuffer();
+            
+            // Update progress
+            const progressPercent = 10 + (80 * (i + 1) / uploadedFiles.length);
+            uploadProgress.style.width = `${progressPercent}%`;
+            
+            // Small delay to show progress animation
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            try {
+                // Load the PDF
+                const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+                
+                // Copy all pages
+                const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                
+                // Add pages to merged document
+                pages.forEach(page => mergedPdf.addPage(page));
+            } catch (error) {
+                console.error(`Error processing ${file.name}:`, error);
+                alert(`Error processing ${file.name}. Skipping this file.`);
+            }
         }
         
-        // Get the combined PDF
-        const blob = await response.blob();
+        // Save the merged PDF
+        uploadProgress.style.width = '90%';
+        const mergedPdfBytes = await mergedPdf.save();
+        
+        // Create blob and download link
+        const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         
         // Complete progress
         uploadProgress.style.width = '100%';
-        combineProgress.style.width = '100%';
         
         // Show result
         setTimeout(() => {
@@ -183,23 +189,6 @@ combineBtn.addEventListener('click', async () => {
     }
 });
 
-// Simulate progress animation
-function simulateProgress(progressBar, label, duration) {
-    return new Promise((resolve) => {
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += Math.random() * 15;
-            if (progress >= 90) {
-                clearInterval(interval);
-                progressBar.style.width = '90%';
-                resolve();
-            } else {
-                progressBar.style.width = progress + '%';
-            }
-        }, duration);
-    });
-}
-
 // Start new session
 newSessionBtn.addEventListener('click', () => {
     resetUI();
@@ -212,7 +201,5 @@ function resetUI() {
     progressContainer.style.display = 'none';
     resultContainer.style.display = 'none';
     fileListContainer.style.display = 'none';
-    combineProgressItem.style.display = 'none';
     uploadProgress.style.width = '0';
-    combineProgress.style.width = '0';
 }
