@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/combine-pdfs.js": {
-      "maxDuration": 120
-    }
-  }
-}
