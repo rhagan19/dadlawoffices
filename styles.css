@@ -1,4 +1,4 @@
-   /* Global Styles */
+/* Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -36,6 +36,11 @@ main {
     position: relative;
     z-index: 2;
     flex: 1;
+}
+
+/* Remove any global text alignment */
+* {
+    text-align: inherit;
 }
 
 /* Navigation Bar */
