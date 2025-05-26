@@ -6,11 +6,11 @@
 }
 
 :root {
-    --primary-dark: #0a1410; 
+    --primary-dark: #0a1410;
     --secondary-dark: #0f1f1a;
     --accent-green: #00d67a;
     --accent-green-light: #00ff94;
-    --accent-green-dark: #00a862; 
+    --accent-green-dark: #00a862;
     --text-primary: #ffffff;
     --text-secondary: #a0a0a0;
     --border-color: #1a3a2a;
@@ -21,32 +21,21 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(135deg, #0a1410 0%, #0f1f1a 100%);
+    background: #0a1410;
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     line-height: 1.6;
     overflow-x: hidden;
-}
-
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 80%, rgba(0, 214, 122, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(0, 214, 122, 0.05) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 1;
+    margin: 0;
+    padding: 0;
 }
 
 main {
     position: relative;
     z-index: 2;
+    flex: 1;
 }
 
 /* Navigation Bar */
@@ -149,11 +138,12 @@ main {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 6rem 2rem 4rem 2rem;
     position: relative;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     background: linear-gradient(135deg, #0a1410 0%, #0f1f1a 100%);
+    min-height: 500px;
 }
 
 .hero-title {
@@ -264,7 +254,7 @@ main {
     color: var(--text-secondary);
     font-size: 0.875rem;
     opacity: 0.5;
-} 
+}
 
 /* Buttons */
 .btn {
