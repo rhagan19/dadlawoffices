@@ -38,11 +38,6 @@ main {
     flex: 1;
 }
 
-/* Remove any global text alignment */
-* {
-    text-align: inherit;
-}
-
 /* Navigation Bar */
 .navbar {
     background: rgba(15, 31, 26, 0.8);
