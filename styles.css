@@ -264,7 +264,7 @@ main {
     color: var(--text-secondary);
     font-size: 0.875rem;
     opacity: 0.5;
-}
+} 
 
 /* Buttons */
 .btn {
