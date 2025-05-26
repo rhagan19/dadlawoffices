@@ -177,44 +177,44 @@ main {
 
 /* Feature Cards Section */
 .features {
-    padding: 4rem 2rem;
-    width: 100%;
-    background: linear-gradient(135deg, #0a1410 0%, #0f1f1a 100%);
-    position: relative;
-    z-index: 2;
+    padding: 6rem 2rem;
+    background: var(--primary-dark);
 }
 
 .feature-cards {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    max-width: 1000px;
+    align-items: stretch;
+    gap: 3rem;
+    max-width: 1200px;
     margin: 0 auto;
+    flex-wrap: wrap;
 }
 
-.feature-card {
-    background: var(--card-bg);
-    border: 1px solid rgba(0, 214, 122, 0.1);
-    border-radius: 12px;
-    padding: 2.5rem 3rem;
-    text-align: center;
-    transition: all 0.3s ease;
-    max-width: 400px;
-    width: 100%;
-}
-
-/* Feature Card Link */
 .feature-card-link {
     text-decoration: none;
     color: inherit;
-    display: block;
+    flex: 1;
+    min-width: 300px;
+    max-width: 450px;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 214, 122, 0.1);
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    backdrop-filter: blur(10px);
 }
 
 .feature-card-link:hover .feature-card {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
     border-color: rgba(0, 214, 122, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 214, 122, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 214, 122, 0.15);
+    background: rgba(255, 255, 255, 0.04);
 }
 
 .feature-icon {
