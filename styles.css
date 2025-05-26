@@ -773,3 +773,16 @@ main {
     width: 100%;
     border: 1px solid rgba(0, 214, 122, 0.1);
 }
+
+/* Override for homepage hero */
+main.upload-fullscreen {
+    min-height: auto;
+    padding: 3rem 2rem;
+}
+
+main.upload-fullscreen .upload-glass {
+    padding: 5rem 4rem;
+    max-width: 1000px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
