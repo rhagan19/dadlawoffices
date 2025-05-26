@@ -177,7 +177,7 @@ main {
 
 /* Feature Cards Section */
 .features {
-    padding: 6rem 2rem;
+    padding: 3rem 2rem 6rem 2rem;
     background: var(--primary-dark);
 }
 
