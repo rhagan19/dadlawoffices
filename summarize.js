@@ -1,5 +1,5 @@
 // Configuration - Replace with your OpenAI API key
-const OPENAI_API_KEY = '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';
+
 
 // DOM elements
 const uploadArea = document.getElementById('uploadArea');
